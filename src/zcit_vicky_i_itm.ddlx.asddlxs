@@ -1,0 +1,56 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'Sales Item',
+    typeNamePlural: 'Sales Items',
+    title: { type: #STANDARD, label: 'Item Number', value: 'SalesItemnumber' }
+  }
+}
+annotate entity ZCIT_VICKY_C_ITM with
+{
+  @UI.facet: [
+    {
+      id:       'SalesItemDetails',
+      purpose:  #STANDARD,
+      type:     #IDENTIFICATION_REFERENCE,
+      label:    'Item Details',
+      position: 10
+    }
+  ]
+
+  @UI: { lineItem:       [{ position: 10, label: 'Sales Document' }],
+         identification: [{ position: 10, label: 'Sales Document' }] }
+  SalesDocument;
+
+  @UI: { lineItem:       [{ position: 20, label: 'Item Number' }],
+         identification: [{ position: 20, label: 'Item Number' }] }
+  SalesItemnumber;
+
+  @UI: { lineItem:       [{ position: 30, label: 'Material' }],
+         identification: [{ position: 30, label: 'Material' }] }
+  Material;
+
+  @UI: { lineItem:       [{ position: 40, label: 'Plant' }],
+         identification: [{ position: 40, label: 'Plant' }] }
+  Plant;
+
+  @UI: { lineItem:       [{ position: 50, label: 'Quantity' }],
+         identification: [{ position: 50, label: 'Quantity' }] }
+  Quantity;
+
+  @UI: { lineItem:       [{ position: 60, label: 'Unit' }],
+         identification: [{ position: 60, label: 'Unit' }] }
+  Quantityunits;
+
+  @UI.hidden: true
+  LocalCreatedBy;
+
+  @UI.hidden: true
+  LocalCreatedAt;
+
+  @UI.hidden: true
+  LocalLastChangedBy;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+}

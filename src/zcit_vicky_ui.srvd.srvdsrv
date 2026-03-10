@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service Definition for Vicky Sales'
+define service ZCIT_VICKY_UI {
+  expose ZCIT_VICKY_C_HDR;
+  expose ZCIT_VICKY_C_ITM;
+}

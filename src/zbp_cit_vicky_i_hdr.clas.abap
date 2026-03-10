@@ -1,0 +1,5 @@
+CLASS zbp_cit_vicky_i_hdr DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zcit_vicky_i_hdr.
+ENDCLASS.
+
+CLASS zbp_cit_vicky_i_hdr IMPLEMENTATION.
+ENDCLASS.

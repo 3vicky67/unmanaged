@@ -1,0 +1,98 @@
+unmanaged implementation in class ZPP_CIT_VICKY_SAVER unique;
+strict (2);
+with draft;
+
+define behavior for ZCIT_VICKY_I_HDR alias SalesOrderHdr
+implementation in class ZBP_CIT_VICKY_I_HDR unique
+draft table ZCIT_VICKY_HDR_D
+lock master total etag LocalLastChangedAt
+authorization master (instance)
+etag master LocalLastChangedAt
+{
+  create (authorization : global);
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Resume;
+  draft determine action Prepare;
+  draft action Activate;
+  draft action Discard;
+
+  action ( features : instance ) uploadExcelData result [1] $self;
+  action ( features : instance ) DownloadExcel   result [1] $self;
+
+  determination FillFileStatus on modify { field ExcelAttachment; }
+
+  side effects
+  {
+    field  ExcelAttachment  affects field FileStatus;
+    // FIXED: Changed 'field _salesitem.*' to 'entity _salesitem' so the UI refreshes!
+    action uploadExcelData  affects entity _salesitem;
+    action DownloadExcel    affects field ExcelAttachment,
+                                    field ExcelMimeType,
+                                    field ExcelFileName,
+                                    field FileStatus;
+  }
+
+  field (mandatory: create) SalesDocument;
+  field (readonly: update)  SalesDocument;
+  field (readonly)          LocalLastChangedAt;
+  field (readonly)          FileStatus;
+  field (readonly)          ExcelMimeType;
+  field (readonly)          ExcelFileName;
+
+  association _salesitem { create; with draft; }
+
+  mapping for zcit_vicky_hdr
+  {
+    SalesDocument       = salesdocument;
+    SalesDocumentType   = salesdocumenttype;
+    OrderReason         = orderreason;
+    SalesOrganization   = salesorganization;
+    DistributionChannel = distributionchannel;
+    Division            = division;
+    SalesOffice         = salesoffice;
+    SalesGroup          = salesgroup;
+    NetPrice            = netprice;
+    Currency            = currency;
+    ExcelAttachment     = excel_attachment;
+    ExcelMimeType       = excel_mimetype;
+    ExcelFileName       = excel_filename;
+    FileStatus          = file_status;
+    LocalCreatedBy      = local_created_by;
+    LocalCreatedAt      = local_created_at;
+    LocalLastChangedBy  = local_last_changed_by;
+    LocalLastChangedAt  = local_last_changed_at;
+  }
+}
+
+define behavior for ZCIT_VICKY_I_ITM alias SalesOrderItm
+implementation in class ZBP_CIT_VICKY_I_ITM unique
+draft table ZCIT_VICKY_ITM_D
+lock dependent by _salesHeader
+authorization dependent by _salesHeader
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+  field (readonly: update, mandatory: create) SalesItemnumber;
+  field (readonly) SalesDocument;
+
+  association _salesHeader { with draft; }
+
+  mapping for zcit_vicky_itm
+  {
+    SalesDocument      = salesdocument;
+    SalesItemnumber    = salesitemnumber;
+    Material           = material;
+    Plant              = plant;
+    Quantity           = quantity;
+    Quantityunits      = quantityunits;
+    LocalCreatedBy     = local_created_by;
+    LocalCreatedAt     = local_created_at;
+    LocalLastChangedBy = local_last_changed_by;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}

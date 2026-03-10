@@ -1,0 +1,5 @@
+CLASS zpp_cit_vicky_saver DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zcit_vicky_i_hdr.
+ENDCLASS.
+
+CLASS zpp_cit_vicky_saver IMPLEMENTATION.
+ENDCLASS.
